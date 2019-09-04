@@ -14,11 +14,12 @@ MIDI_ENABLE = no            # MIDI controls
 AUDIO_ENABLE = no           # Audio output on port C6
 UNICODE_ENABLE = no         # Unicode
 BLUETOOTH_ENABLE = no       # Enable Bluetooth with the Adafruit EZ-Key HID
-RGBLIGHT_ENABLE = yes       # Enable WS2812 RGB underlight. 
+RGBLIGHT_ENABLE = no        # Enable WS2812 RGB underlight.
 SWAP_HANDS_ENABLE = no      # Enable one-hand typing
+TAP_DANCE_ENABLE = yes
 
 # If your custom naked48 pcb, you can rewrite to yes.
-LED_ANIMATIONS = yes        # LED animations
+LED_ANIMATIONS = no        # LED animations
 
 ifeq ($(strip $(LED_ANIMATIONS)), yes)
     # OPT_DEFS += -DRGBLIGHT_ANIMATIONS

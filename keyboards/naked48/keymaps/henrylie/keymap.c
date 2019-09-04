@@ -37,27 +37,27 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT(
   //|----------------------------------------------------------------------------------------|                 |-----------------------------------------------------------------------------------------------|
-       XXXXX,           KC_Q,           KC_W,           KC_F,           KC_P,           KC_G,                              KC_J,            KC_L,            KC_U,            KC_Y,         KC_SCLN,     XXXXX,
+       XXXXX,      TD(TD_Q_1),    TD(TD_W_2),     TD(TD_F_3),     TD(TD_P_4),     TD(TD_G_5),                        TD(TD_J_6),      TD(TD_L_7),      TD(TD_U_8),      TD(TD_Y_9),    TD(TD_SCR_0),     XXXXX,
   //|--------+---------------+---------------+---------------+---------------+---------------|                 |----------------+----------------+----------------+----------------+----------------+----------|
-       XXXXX,           KC_A,           KC_R,           KC_S,           KC_T,           KC_D,                              KC_H,            KC_N,            KC_E,            KC_I,            KC_O,     XXXXX,
+       XXXXX,    SFT_T(KC_A),    CTL_T(KC_R),    ALT_T(KC_S),    GUI_T(KC_T),   TD(TD_D_TAB),                      TD(TD_H_ESC),     GUI_T(KC_N),     ALT_T(KC_E),     CTL_T(KC_I),     SFT_T(KC_O),     XXXXX,
   //|--------+---------------+---------------+---------------+---------------+---------------|                 |----------------+----------------+----------------+----------------+----------------+----------|
-       XXXXX,           KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,                              KC_K,            KC_M,         KC_COMM,          KC_DOT,         KC_QUOT,     XXXXX,
+       XXXXX,           KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,                              KC_K,            KC_M,      TD(TD_CLN), TD(TD_DOT_COMM),     TD(TD_QUOT),     XXXXX,
   //|--------+---------------+---------------+---------------+---------------+---------------+--------+--------+----------------+----------------+----------------+----------------+----------------+----------|
-                       XXXXX,          XXXXX,        KC_LCPO,LGUI_T(KC_BSPC),   LT(1,KC_ESC),   XXXXX,   XXXXX,    LT(1,KC_ENT),  LSFT_T(KC_SPC),         KC_RAPC,           XXXXX,           XXXXX
+                       XXXXX,          XXXXX,        KC_LCPO, SFT_T(KC_BSPC),   LT(1,KC_ESC),   XXXXX,   XXXXX,    LT(1,KC_ENT),   SFT_T(KC_SPC),         KC_RAPC,           XXXXX,           XXXXX
           //|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
   ),
 
 
   [_LOWER] = LAYOUT(
-  //,-----------------------------------------------------|                 |-----------------------------------------------------.
-      KC_TILD, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                   KC_CIRC, KC_AMPR,  KC_ASTR,KC_LPRN, KC_RPRN,  KC_DEL,
-  //|--------+--------+--------+--------+--------+--------|                 |--------+--------+--------+--------+--------+--------|
-       KC_DEL,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                     KC_F6, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_PIPE,
-  //|--------+--------+--------+--------+--------+--------|                 |--------+--------+--------+--------+--------+--------|
-        _____,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,                    KC_F12,KC_SNUHS,KC_SNUBS,   _____,   _____,   _____,
-  //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-                 _____,   _____,   _____,   _____,   _____,   _____,   _____,   _____, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
-          //`------------------------------------------------------------------------------------------------------------'
+  //|----------------------------------------------------------------------------------------|                 |-----------------------------------------------------------------------------------------------|
+       XXXXX,           KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                              KC_6,            KC_7,            KC_8,            KC_9,            KC_0,     XXXXX,
+  //|--------+---------------+---------------+---------------+---------------+---------------|                 |----------------+----------------+----------------+----------------+----------------+----------|
+       XXXXX,    SFT_T(KC_A),    CTL_T(KC_R),    ALT_T(KC_S),    GUI_T(KC_T),           KC_D,                              KC_H,         KC_LEFT,           KC_UP,         KC_DOWN,        KC_RIGHT,     XXXXX,
+  //|--------+---------------+---------------+---------------+---------------+---------------|                 |----------------+----------------+----------------+----------------+----------------+----------|
+       XXXXX,           KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,                              KC_K,            KC_M,         KC_COMM,          KC_DOT,         KC_QUOT,     XXXXX,
+  //|--------+---------------+---------------+---------------+---------------+---------------+--------+--------+----------------+----------------+----------------+----------------+----------------+----------|
+                       XXXXX,          XXXXX,        KC_LCPO, SFT_T(KC_BSPC),   LT(1,KC_ESC),   XXXXX,   XXXXX,    LT(1,KC_ENT),   SFT_T(KC_SPC),         KC_RAPC,           XXXXX,           XXXXX
+          //|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
   ),
 
 
@@ -133,6 +133,134 @@ void matrix_init_user(void) {
     RGB_current_mode = rgblight_config.mode;
   #endif
 }
+
+#pragma region TAP_DANCE
+
+//Tap Dance Declarations
+enum {
+  TD_DOT_COMM = 0,
+  TD_Q_1,
+  TD_W_2,
+  TD_F_3,
+  TD_P_4,
+  TD_G_5,
+  TD_J_6,
+  TD_L_7,
+  TD_U_8,
+  TD_Y_9,
+  TD_SCR_0,
+  TD_D_TAB,
+  TD_H_ESC,
+  TD_1,
+  TD_2,
+  TD_3,
+  TD_4,
+  TD_5,
+  TD_6,
+  TD_7,
+  TD_8,
+  TD_9,
+  TD_0,
+  TD_CLN,
+  TD_QUOT
+};
+
+typedef void (*dance)(*qk_tap_dance_state_t, *void);
+
+void dance_cln_finished (qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    register_code (KC_SCLN);
+  } else {
+    register_code (KC_RSFT);
+    register_code (KC_SCLN);
+  }
+}
+
+void dance_cln_reset (qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    unregister_code (KC_SCLN);
+  } else {
+    unregister_code (KC_RSFT);
+    unregister_code (KC_SCLN);
+  }
+}
+
+dance dance_typedef(uint16_t keycode)
+{
+    return
+}
+
+void dance_cln_finished (qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    register_code (KC_SCLN);
+  } else {
+    register_code (KC_RSFT);
+    register_code (KC_SCLN);
+  }
+}
+
+void dance_cln_reset (qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    unregister_code (KC_SCLN);
+  } else {
+    unregister_code (KC_RSFT);
+    unregister_code (KC_SCLN);
+  }
+}
+
+void dance_quot_finished (qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    register_code (KC_QUOT);
+  } else {
+    register_code (KC_RSFT);
+    register_code (KC_QUOT);
+  }
+}
+
+void dance_quot_reset (qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    unregister_code (KC_QUOT);
+  } else {
+    unregister_code (KC_RSFT);
+    unregister_code (KC_QUOT);
+  }
+}
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+  [TD_DOT_COMM]  = ACTION_TAP_DANCE_DOUBLE(KC_DOT, KC_COMM),
+  [TD_Q_1]  = ACTION_TAP_DANCE_DOUBLE(KC_Q, KC_1),
+  [TD_W_2]  = ACTION_TAP_DANCE_DOUBLE(KC_W, KC_2),
+  [TD_F_3]  = ACTION_TAP_DANCE_DOUBLE(KC_F, KC_3),
+  [TD_P_4]  = ACTION_TAP_DANCE_DOUBLE(KC_P, KC_4),
+  [TD_G_5]  = ACTION_TAP_DANCE_DOUBLE(KC_G, KC_5),
+  [TD_J_6]  = ACTION_TAP_DANCE_DOUBLE(KC_J, KC_6),
+  [TD_L_7]  = ACTION_TAP_DANCE_DOUBLE(KC_L, KC_7),
+  [TD_U_8]  = ACTION_TAP_DANCE_DOUBLE(KC_U, KC_8),
+  [TD_Y_9]  = ACTION_TAP_DANCE_DOUBLE(KC_Y, KC_9),
+  [TD_SCR_0]  = ACTION_TAP_DANCE_DOUBLE(KC_PSCR, KC_0),
+  [TD_D_TAB]  = ACTION_TAP_DANCE_DOUBLE(KC_D, KC_TAB),
+  [TD_H_ESC]  = ACTION_TAP_DANCE_DOUBLE(KC_H, KC_ESC),
+
+  [TD_1]  = ACTION_TAP_DANCE_DOUBLE(KC_1, KC_!),
+  [TD_2]  = ACTION_TAP_DANCE_DOUBLE(KC_2, KC_@),
+  [TD_3]  = ACTION_TAP_DANCE_DOUBLE(KC_3, KC_!),
+  [TD_4]  = ACTION_TAP_DANCE_DOUBLE(KC_4, KC_!),
+  [TD_5]  = ACTION_TAP_DANCE_DOUBLE(KC_5, KC_!),
+  [TD_6]  = ACTION_TAP_DANCE_DOUBLE(KC_6, KC_!),
+  [TD_7]  = ACTION_TAP_DANCE_DOUBLE(KC_7, KC_!),
+  [TD_8]  = ACTION_TAP_DANCE_DOUBLE(KC_8, KC_!),
+  [TD_9]  = ACTION_TAP_DANCE_DOUBLE(KC_9, KC_!),
+  [TD_0]  = ACTION_TAP_DANCE_DOUBLE(KC_0, KC_!),
+
+
+  [TD_CLN] = ACTION_TAP_DANCE_FN_ADVANCED (NULL, dance_cln_finished, dance_cln_reset),
+  [TD_QUOT] = ACTION_TAP_DANCE_FN_ADVANCED (NULL, dance_quot_finished, dance_quot_reset)
+
+};
+
+
+
+#pragma endregion
 
 // const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // 	[0] = LAYOUT(KC_NO, KC_Q, KC_W, KC_F, KC_P, KC_G, KC_J, KC_L, KC_U, KC_Y, KC_SCLN, KC_NO, KC_NO, KC_A, KC_R, KC_S, KC_T, KC_D, KC_H, KC_N, KC_E, KC_I, KC_O, KC_NO, KC_NO, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_K, KC_M, KC_COMM, KC_DOT, KC_QUOT, KC_NO, KC_NO, KC_NO, KC_LCPO, LCTL_T(KC_SPC), LT(2,KC_ENT), KC_NO, KC_NO, LT(1,KC_ESC), LSFT_T(KC_BSPC), KC_RAPC, KC_NO, KC_NO),
