@@ -14,6 +14,7 @@
         "*.hpp": "cpp",
         "xstddef": "c"
     },
+    "peacock.color": "#1857a4",
     "workbench.colorCustomizations": {
         "activityBar.background": "#1f6fd0",
         "activityBar.foreground": "#e7e7e7",
@@ -28,5 +29,5 @@
         "statusBarItem.hoverBackground": "#1f6fd0",
         "statusBar.foreground": "#e7e7e7"
     },
-    "peacock.color": "#1857a4"
+    "peacock.remoteColor": "#1857a4"
 }
