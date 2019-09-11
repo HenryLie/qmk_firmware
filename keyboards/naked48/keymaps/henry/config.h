@@ -26,6 +26,7 @@
 
 #define TAPPING_FORCE_HOLD
 #define TAPPING_TERM 180
+#define TAP_CODE_DELAY 100
 
 // Selection of RGBLIGHT MODE to use.
 #if defined(LED_ANIMATIONS)

@@ -121,13 +121,13 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT(
   //|----------------------------------------------------------------------------------------|                 |-----------------------------------------------------------------------------------------------|
-       XXXXX,      TD(TD_Q_1),    TD(TD_W_2),     TD(TD_F_3),     TD(TD_P_4),     TD(TD_G_5),                        TD(TD_J_6),      TD(TD_L_7),      TD(TD_U_8),      TD(TD_Y_9),    TD(TD_SCR_0),     XXXXX,
+       XXXXX,           KC_Q,           KC_W,           KC_F,           KC_P,           KC_G,                              KC_J,            KC_L,            KC_U,            KC_Y,         KC_SCLN,     XXXXX,
   //|--------+---------------+---------------+---------------+---------------+---------------|                 |----------------+----------------+----------------+----------------+----------------+----------|
-       XXXXX,    SFT_T(KC_A),    CTL_T(KC_R),    ALT_T(KC_S),    GUI_T(KC_T),   TD(TD_D_TAB),                      TD(TD_H_ESC),     GUI_T(KC_N),     ALT_T(KC_E),     CTL_T(KC_I),     SFT_T(KC_O),     XXXXX,
+       XXXXX,    SFT_T(KC_A),    CTL_T(KC_R),    ALT_T(KC_S),    GUI_T(KC_T),           KC_D,                              KC_H,     GUI_T(KC_N),     ALT_T(KC_E),     CTL_T(KC_I),     SFT_T(KC_O),     XXXXX,
   //|--------+---------------+---------------+---------------+---------------+---------------|                 |----------------+----------------+----------------+----------------+----------------+----------|
-       XXXXX,           KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,                              KC_K,            KC_M,      TD(TD_CLN), TD(TD_DOT_COMM),     TD(TD_QUOT),     XXXXX,
+       XXXXX,           KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,                              KC_K,            KC_M,         KC_COMM,          KC_DOT,         KC_QUOT,     XXXXX,
   //|--------+---------------+---------------+---------------+---------------+---------------+--------+--------+----------------+----------------+----------------+----------------+----------------+----------|
-                       XXXXX,          XXXXX,        KC_LCPO, SFT_T(KC_BSPC),   LT(1,KC_ESC),   XXXXX,   XXXXX,    LT(1,KC_ENT),   SFT_T(KC_SPC),         KC_RAPC,           XXXXX,           XXXXX
+                       XXXXX,          XXXXX,        KC_LCPO, SFT_T(KC_BSPC),          LOWER,   XXXXX,   XXXXX,            LOWER,   SFT_T(KC_SPC),         KC_RAPC,           XXXXX,           XXXXX
           //|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
   ),
 
@@ -136,25 +136,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----------------------------------------------------------------------------------------|                 |-----------------------------------------------------------------------------------------------|
        XXXXX,           KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                              KC_6,            KC_7,            KC_8,            KC_9,            KC_0,     XXXXX,
   //|--------+---------------+---------------+---------------+---------------+---------------|                 |----------------+----------------+----------------+----------------+----------------+----------|
-       XXXXX,    SFT_T(KC_A),    CTL_T(KC_R),    ALT_T(KC_S),    GUI_T(KC_T),           KC_D,                              KC_H,         KC_LEFT,           KC_UP,         KC_DOWN,        KC_RIGHT,     XXXXX,
+       XXXXX, SFT_T(KC_PSCR),  CTL_T(KC_ESC),  ALT_T(KC_TAB),  GUI_T(KC_GRV),        KC_MINS,                            KC_EQL,         KC_LEFT,           KC_UP,         KC_DOWN,        KC_RIGHT,     XXXXX,
   //|--------+---------------+---------------+---------------+---------------+---------------|                 |----------------+----------------+----------------+----------------+----------------+----------|
-       XXXXX,           KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,                              KC_K,            KC_M,         KC_COMM,          KC_DOT,         KC_QUOT,     XXXXX,
+       XXXXX,        KC_LBRC,          KC_LT,        KC_LCBR,        KC_LPRN,        KC_BSLS,                           KC_SLSH,         KC_RPRN,         KC_RCBR,           KC_GT,         KC_RBRC,     XXXXX,
   //|--------+---------------+---------------+---------------+---------------+---------------+--------+--------+----------------+----------------+----------------+----------------+----------------+----------|
-                       XXXXX,          XXXXX,        KC_LCPO, SFT_T(KC_BSPC),   LT(1,KC_ESC),   XXXXX,   XXXXX,    LT(1,KC_ENT),   SFT_T(KC_SPC),         KC_RAPC,           XXXXX,           XXXXX
+                       XXXXX,          XXXXX,        KC_LCPO,  SFT_T(KC_DEL),          _____,   XXXXX,   XXXXX,           _____,   SFT_T(KC_ENT),         KC_RAPC,           XXXXX,           XXXXX
           //|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
   ),
 
 
   [_RAISE] = LAYOUT(
-  //,-----------------------------------------------------|                 |-----------------------------------------------------.
-      KC_TILD,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_DEL,
-  //|--------+--------+--------+--------+--------+--------|                 |--------+--------+--------+--------+--------+--------|
-       KC_DEL,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                     KC_F6, KC_MINS,  KC_EQL, KC_LBRC, KC_RBRC, KC_BSLS,
-  //|--------+--------+--------+--------+--------+--------|                 |--------+--------+--------+--------+--------+--------|
-        _____,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,                    KC_F12, KC_NUHS, KC_NUBS,   _____,   _____,   _____,
-  //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-                 _____,   _____,   _____,   _____,   _____,   _____,   _____,   _____,   _____,   _____,   _____,   _____
-          //`------------------------------------------------------------------------------------------------------------'
+  //|----------------------------------------------------------------------------------------|                 |-----------------------------------------------------------------------------------------------|
+       XXXXX,        KC_EXLM,          KC_AT,        KC_HASH,         KC_DLR,        KC_PERC,                           KC_CIRC,         KC_AMPR,         KC_ASTR,          KC_GRV,         KC_PSCR,     XXXXX,
+  //|--------+---------------+---------------+---------------+---------------+---------------|                 |----------------+----------------+----------------+----------------+----------------+----------|
+       XXXXX,    SFT_T(KC_A),    CTL_T(KC_R),    ALT_T(KC_S),    GUI_T(KC_T),         KC_ESC,                            KC_TAB,         KC_LEFT,           KC_UP,         KC_DOWN,        KC_RIGHT,     XXXXX,
+  //|--------+---------------+---------------+---------------+---------------+---------------|                 |----------------+----------------+----------------+----------------+----------------+----------|
+       XXXXX,        KC_LBRC,          KC_LT,        KC_LCBR,        KC_LPRN,        KC_BSLS,                           KC_SLSH,         KC_RPRN,         KC_RCBR,           KC_GT,         KC_RBRC,     XXXXX,
+  //|--------+---------------+---------------+---------------+---------------+---------------+--------+--------+----------------+----------------+----------------+----------------+----------------+----------|
+                       XXXXX,          XXXXX,        KC_LCPO, SFT_T(KC_BSPC),          _____,   XXXXX,   XXXXX,           _____,   SFT_T(KC_SPC),         KC_RAPC,           XXXXX,           XXXXX
+          //|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
   )
 };
 
@@ -171,11 +171,32 @@ static inline void update_change_layer(bool pressed, uint8_t layer1, uint8_t lay
   }
 }
 
+
+bool tap_hold(bool pressed, uint16_t time, uint16_t keycodehold) {
+  static uint16_t time_on_pressed;
+
+  bool result = false;
+  if (pressed) {
+    time_on_pressed = time;
+  } else {
+    if (TIMER_DIFF_16(time, time_on_pressed) > TAPPING_TERM) {
+      tap_code(keycodehold);
+    } else {
+      result = true;
+    }
+    time_on_pressed = 0;
+  }
+  return result;
+}
+
 int RGB_current_mode;
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
   bool result = false;
   switch (keycode) {
+    case KC_Q:
+      return tap_hold(record->event.pressed, record->event.time, KC_1);
+      break;
     case LOWER:
       update_change_layer(record->event.pressed, _LOWER, _RAISE);
       break;
