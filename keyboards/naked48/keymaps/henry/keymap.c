@@ -172,21 +172,19 @@ static inline void update_change_layer(bool pressed, uint8_t layer1, uint8_t lay
 }
 
 
-bool tap_hold(bool pressed, uint16_t time, uint16_t keycodehold) {
+void tap_hold(bool pressed, uint16_t time, uint16_t keycodetap, uint16_t keycodehold) {
   static uint16_t time_on_pressed;
 
-  bool result = false;
   if (pressed) {
     time_on_pressed = time;
   } else {
     if (TIMER_DIFF_16(time, time_on_pressed) > TAPPING_TERM) {
       tap_code(keycodehold);
     } else {
-      result = true;
+      tap_code(keycodetap);
     }
     time_on_pressed = 0;
   }
-  return result;
 }
 
 int RGB_current_mode;
@@ -195,7 +193,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   bool result = false;
   switch (keycode) {
     case KC_Q:
-      return tap_hold(record->event.pressed, record->event.time, KC_1);
+      tap_hold(record->event.pressed, record->event.time, KC_Q, KC_1);
       break;
     case LOWER:
       update_change_layer(record->event.pressed, _LOWER, _RAISE);
