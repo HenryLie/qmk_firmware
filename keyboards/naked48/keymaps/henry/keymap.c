@@ -20,7 +20,8 @@ enum layer_number {
 };
 
 enum custom_keycodes {
-  LOWER = SAFE_RANGE,
+  LOWER_DEL = SAFE_RANGE,
+  LOWER_ENT,
   RAISE,
   RGBRST
 };
@@ -127,7 +128,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+---------------+---------------+---------------+---------------+---------------|                 |----------------+----------------+----------------+----------------+----------------+----------|
        XXXXX,           KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,                              KC_K,            KC_M,         KC_COMM,          KC_DOT,         KC_QUOT,     XXXXX,
   //|--------+---------------+---------------+---------------+---------------+---------------+--------+--------+----------------+----------------+----------------+----------------+----------------+----------|
-                       XXXXX,          XXXXX,        KC_LCPO, SFT_T(KC_BSPC),          LOWER,   XXXXX,   XXXXX,            LOWER,   SFT_T(KC_SPC),         KC_RAPC,           XXXXX,           XXXXX
+                       XXXXX,          XXXXX,        KC_LCPO, GUI_T(KC_BSPC),      LOWER_DEL,   XXXXX,   XXXXX,       LOWER_ENT,   SFT_T(KC_SPC),         KC_RAPC,           XXXXX,           XXXXX
           //|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
   ),
 
@@ -140,7 +141,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+---------------+---------------+---------------+---------------+---------------|                 |----------------+----------------+----------------+----------------+----------------+----------|
        XXXXX,        KC_LBRC,          KC_LT,        KC_LCBR,        KC_LPRN,        KC_BSLS,                           KC_SLSH,         KC_RPRN,         KC_RCBR,           KC_GT,         KC_RBRC,     XXXXX,
   //|--------+---------------+---------------+---------------+---------------+---------------+--------+--------+----------------+----------------+----------------+----------------+----------------+----------|
-                       XXXXX,          XXXXX,        KC_LCPO,  SFT_T(KC_DEL),          _____,   XXXXX,   XXXXX,           _____,   SFT_T(KC_ENT),         KC_RAPC,           XXXXX,           XXXXX
+                       XXXXX,          XXXXX,        KC_LCPO,  GUI_T(KC_DEL),          _____,   XXXXX,   XXXXX,           _____,   SFT_T(KC_ENT),         KC_RAPC,           XXXXX,           XXXXX
           //|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
   ),
 
@@ -149,11 +150,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----------------------------------------------------------------------------------------|                 |-----------------------------------------------------------------------------------------------|
        XXXXX,        KC_EXLM,          KC_AT,        KC_HASH,         KC_DLR,        KC_PERC,                           KC_CIRC,         KC_AMPR,         KC_ASTR,          KC_GRV,         KC_PSCR,     XXXXX,
   //|--------+---------------+---------------+---------------+---------------+---------------|                 |----------------+----------------+----------------+----------------+----------------+----------|
-       XXXXX,    SFT_T(KC_A),    CTL_T(KC_R),    ALT_T(KC_S),    GUI_T(KC_T),         KC_ESC,                            KC_TAB,         KC_LEFT,           KC_UP,         KC_DOWN,        KC_RIGHT,     XXXXX,
+       XXXXX, SFT_T(KC_PSCR),  CTL_T(KC_ESC),  ALT_T(KC_TAB),  GUI_T(KC_GRV),        KC_UNDS,                           KC_PLUS,   LALT(KC_LEFT),         KC_PGUP,         KC_PGDN,  LALT(KC_RIGHT),     XXXXX,
   //|--------+---------------+---------------+---------------+---------------+---------------|                 |----------------+----------------+----------------+----------------+----------------+----------|
-       XXXXX,        KC_LBRC,          KC_LT,        KC_LCBR,        KC_LPRN,        KC_BSLS,                           KC_SLSH,         KC_RPRN,         KC_RCBR,           KC_GT,         KC_RBRC,     XXXXX,
+       XXXXX,        KC_LBRC,        KC_BTN2,        KC_BTN3,        KC_BTN1,        KC_PIPE,                           KC_QUES,         KC_MS_L,         KC_MS_U,         KC_MS_D,         KC_MS_R,     XXXXX,
   //|--------+---------------+---------------+---------------+---------------+---------------+--------+--------+----------------+----------------+----------------+----------------+----------------+----------|
-                       XXXXX,          XXXXX,        KC_LCPO, SFT_T(KC_BSPC),          _____,   XXXXX,   XXXXX,           _____,   SFT_T(KC_SPC),         KC_RAPC,           XXXXX,           XXXXX
+                       XXXXX,          XXXXX,        KC_LCPO, GUI_T(KC_BSPC),          _____,   XXXXX,   XXXXX,           _____,   SFT_T(KC_SPC),         KC_RAPC,           XXXXX,           XXXXX
           //|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
   )
 };
@@ -187,6 +188,36 @@ void tap_hold(bool pressed, uint16_t time, uint16_t keycodetap, uint16_t keycode
   }
 }
 
+void tap_hold_lower_del(bool pressed, uint16_t time) {
+  static uint16_t time_on_pressed;
+
+  if (pressed) {
+    time_on_pressed = time;
+    update_change_layer(pressed, _LOWER, _RAISE);
+  } else {
+    update_change_layer(pressed, _LOWER, _RAISE);
+    if (TIMER_DIFF_16(time, time_on_pressed) < TAPPING_TERM) {
+      tap_code(KC_DEL);
+    }
+    time_on_pressed = 0;
+  }
+}
+
+void tap_hold_lower_ent(bool pressed, uint16_t time) {
+  static uint16_t time_on_pressed;
+
+  if (pressed) {
+    time_on_pressed = time;
+    update_change_layer(pressed, _LOWER, _RAISE);
+  } else {
+    update_change_layer(pressed, _LOWER, _RAISE);
+    if (TIMER_DIFF_16(time, time_on_pressed) < TAPPING_TERM) {
+      tap_code(KC_ENT);
+    }
+    time_on_pressed = 0;
+  }
+}
+
 int RGB_current_mode;
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
@@ -195,8 +226,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KC_Q:
       tap_hold(record->event.pressed, record->event.time, KC_Q, KC_1);
       break;
-    case LOWER:
-      update_change_layer(record->event.pressed, _LOWER, _RAISE);
+    case LOWER_DEL:
+      tap_hold_lower_del(record->event.pressed, record->event.time);
+      break;
+    case LOWER_ENT:
+      tap_hold_lower_ent(record->event.pressed, record->event.time);
       break;
     #ifdef RGBLIGHT_ENABLE
       case RGB_MOD:
