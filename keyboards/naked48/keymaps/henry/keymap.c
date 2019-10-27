@@ -23,6 +23,7 @@ enum custom_keycodes {
   LOWER_ESC = SAFE_RANGE,
   LOWER_ENT,
   RAISE,
+  MT_SDQUO,
   RGBRST
 };
 
@@ -150,7 +151,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----------------------------------------------------------------------------------------|                 |-----------------------------------------------------------------------------------------------|
        XXXXX,        KC_EXLM,          KC_AT,        KC_HASH,         KC_DLR,        KC_PERC,                           KC_CIRC,         KC_AMPR,         KC_ASTR,          KC_GRV,         KC_TILD,     XXXXX,
   //|--------+---------------+---------------+---------------+---------------+---------------|                 |----------------+----------------+----------------+----------------+----------------+----------|
-       XXXXX, SFT_T(KC_DQUO), CTL_T(KC_QUOT),  ALT_T(KC_GRV),  GUI_T(KC_TAB),        KC_UNDS,                           KC_PLUS,      A(KC_LEFT),         KC_PGUP,         KC_PGDN,     A(KC_RIGHT),     XXXXX,
+       XXXXX,       MT_SDQUO, CTL_T(KC_QUOT),  ALT_T(KC_GRV),  GUI_T(KC_TAB),        KC_UNDS,                           KC_PLUS,      A(KC_LEFT),         KC_PGUP,         KC_PGDN,     A(KC_RIGHT),     XXXXX,
   //|--------+---------------+---------------+---------------+---------------+---------------|                 |----------------+----------------+----------------+----------------+----------------+----------|
        XXXXX,        UC_M_OS,        KC_BTN2,        KC_BTN3,        KC_BTN1,        KC_PIPE,                           KC_QUES,         KC_MS_L,         KC_MS_U,         KC_MS_D,         KC_MS_R,     XXXXX,
   //|--------+---------------+---------------+---------------+---------------+---------------+--------+--------+----------------+----------------+----------------+----------------+----------------+----------|
@@ -183,6 +184,21 @@ void tap_hold(bool pressed, uint16_t time, uint16_t keycodetap, uint16_t keycode
       tap_code(keycodehold);
     } else {
       tap_code(keycodetap);
+    }
+    time_on_pressed = 0;
+  }
+}
+
+void tap_hold_modshifted(bool pressed, uint16_t time, uint16_t keycodetap, uint16_t keycodehold) {
+  static uint16_t time_on_pressed;
+
+  if (pressed) {
+    register_code (keycodehold);
+    time_on_pressed = time;
+  } else {
+    unregister_code (keycodehold);
+    if (TIMER_DIFF_16(time, time_on_pressed) < TAPPING_TERM) {
+      tap_code16(S(keycodetap));
     }
     time_on_pressed = 0;
   }
@@ -226,6 +242,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // case KC_Q:
     //   tap_hold(record->event.pressed, record->event.time, KC_Q, KC_1);
     //   break;
+    case MT_SDQUO:
+      tap_hold_modshifted(record->event.pressed, record->event.time, KC_QUOT, KC_RSFT);
+      break;
     case LOWER_ESC:
       tap_hold_lower_esc(record->event.pressed, record->event.time);
       break;
