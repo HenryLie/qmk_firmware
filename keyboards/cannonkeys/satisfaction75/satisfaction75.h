@@ -8,8 +8,11 @@
     #include "rev1.h"
 #endif
 
-/* screen off after this many milliseconds */
-#define ScreenOffInterval 60000 /* milliseconds */
+#include "via.h" // only for EEPROM address
+#define EEPROM_ENABLED_ENCODER_MODES (VIA_EEPROM_CUSTOM_CONFIG_ADDR)
+#define EEPROM_CUSTOM_BACKLIGHT (VIA_EEPROM_CUSTOM_CONFIG_ADDR+1)
+#define EEPROM_DEFAULT_OLED (VIA_EEPROM_CUSTOM_CONFIG_ADDR+2)
+#define EEPROM_CUSTOM_ENCODER (VIA_EEPROM_CUSTOM_CONFIG_ADDR+3)
 
 typedef union {
     uint8_t raw;
@@ -47,6 +50,12 @@ enum encoder_modes {
   ENC_MODE_CLOCK_SET // This shouldn't be included in the default modes, so we put it after NUM_ENCODER_MODES
 };
 
+enum custom_encoder_behavior {
+    ENC_CUSTOM_CW = 0,
+    ENC_CUSTOM_CCW,
+    ENC_CUSTOM_PRESS
+};
+
 enum oled_modes {
   OLED_DEFAULT,
   OLED_TIME,
@@ -62,10 +71,10 @@ extern volatile uint8_t led_scrolllock;
 extern uint8_t layer;
 
 // OLED Behavior
-extern uint16_t last_flush;
-extern bool queue_for_send;
 extern uint8_t oled_mode;
-extern bool oled_sleeping;
+extern bool oled_repaint_requested;
+extern bool oled_wakeup_requested;
+extern uint32_t oled_sleep_timer;
 
 // Encoder Behavior
 extern uint8_t encoder_value;
@@ -96,18 +105,19 @@ void change_encoder_mode(bool negative);
 uint16_t handle_encoder_clockwise(void);
 uint16_t handle_encoder_ccw(void);
 uint16_t handle_encoder_press(void);
+uint16_t retrieve_custom_encoder_config(uint8_t encoder_idx, uint8_t behavior);
+void set_custom_encoder_config(uint8_t encoder_idx, uint8_t behavior, uint16_t new_code);
 
 void update_time_config(int8_t increment);
 
-__attribute__ ((weak))
-void draw_ui(void);
-void draw_default(void);
-void draw_clock(void);
+void oled_request_wakeup(void);
+void oled_request_repaint(void);
+bool oled_task_needs_to_repaint(void);
 
 void backlight_init_ports(void);
 void backlight_set(uint8_t level);
 bool is_breathing(void);
 void breathing_enable(void);
 void breathing_disable(void);
-void load_custom_config(void);
-void save_backlight_config_to_eeprom(void);
+void custom_config_load(void);
+void backlight_config_save(void);

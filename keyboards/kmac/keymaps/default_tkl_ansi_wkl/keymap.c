@@ -73,15 +73,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case MCR_04:
             if (record->event.pressed) {
-                SEND_STRING(SS_LCTRL("c") SS_TAP(X_RIGHT) SS_LCTRL("v"));
+                SEND_STRING(SS_LCTL("c") SS_TAP(X_RIGHT) SS_LCTL("v"));
             }
             break;
     }
     return true;
 };
-
-void matrix_init_user(void) {}
-
-void matrix_scan_user(void) {}
-
-void led_set_user(uint8_t usb_led) {}

@@ -1,3 +1,19 @@
+/* Copyright 2019-2021 Konstantin Đorđević <vomindoraan@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "tap_dance.h"
 #include "konstantin.h"
 
@@ -111,8 +127,9 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_RCT_RSF] = ACTION_TAP_DANCE_DOUBLE_MOD(KC_RCTL, KC_RSFT),
     [TD_RSF_RCT] = ACTION_TAP_DANCE_DOUBLE_MOD(KC_RSFT, KC_RCTL),
 
+#ifdef LAYER_FN
     [TD_LSFT_FN] = ACTION_TAP_DANCE_MOD_LAYER(KC_LSFT, L_FN),
     [TD_RCTL_FN] = ACTION_TAP_DANCE_MOD_LAYER(KC_RCTL, L_FN),
-
     [TD_FN_RCTL] = ACTION_TAP_DANCE_LAYER_MOD(L_FN, KC_RCTL),
+#endif
 };

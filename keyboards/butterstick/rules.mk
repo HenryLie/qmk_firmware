@@ -1,19 +1,19 @@
 # MCU name
 MCU = atmega32u4
-F_CPU = 16000000
-ARCH = AVR8
-F_USB = $(F_CPU)
 
-OPT_DEFS += -DINTERRUPT_CONTROL_ENDPOINT -DONLYQWERTY -DDEBUG_MATRIX
-SRC += sten.c
-EXTRAFLAGS += -flto
-
-
+# Bootloader selection
 BOOTLOADER = atmel-dfu
-MOUSEKEY_ENABLE 	= yes		# Mouse keys(+4700)
-EXTRAKEY_ENABLE 	= yes       # Audio control and System control(+450)
-CONSOLE_ENABLE 		= yes       # Console for debug(+400)
+
+# Build Options
+#   change yes to no to disable
+#
+MOUSEKEY_ENABLE 	= yes		# Mouse keys
+EXTRAKEY_ENABLE 	= yes       # Audio control and System control
+CONSOLE_ENABLE 		= yes       # Console for debug
 COMMAND_ENABLE 		= no		# Commands for debug and configuration
-NKRO_ENABLE 		= yes       # USB Nkey Rollover
+NKRO_ENABLE = yes           # Enable N-Key Rollover
 STENO_ENABLE		= yes 		# Needed for chording
 
+OPT_DEFS += -DONLYQWERTY -DDEBUG_MATRIX
+SRC += sten.c
+LTO_ENABLE = yes

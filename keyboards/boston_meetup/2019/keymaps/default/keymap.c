@@ -13,10 +13,8 @@ enum custom_layers {
 };
 
 enum custom_keycodes {
-  BASE = SAFE_RANGE,
-  LOWER,
+  LOWER = SAFE_RANGE,
   RAISE,
-  KC_DEMOMACRO
 };
 
 // Custom macros
@@ -27,7 +25,6 @@ enum custom_keycodes {
 // Requires KC_TRNS/_______ for the trigger key in the destination layer
 #define LT_MC(kc)   LT(_MOUSECURSOR, kc)        // L-ayer T-ap M-ouse C-ursor
 #define LT_RAI(kc)  LT(_RAISE, kc)              // L-ayer T-ap to Raise
-#define DEMOMACRO   KC_DEMOMACRO                // Sample for macros
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -108,21 +105,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
-uint32_t layer_state_set_user(uint32_t state) {
+layer_state_t layer_state_set_user(layer_state_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case KC_DEMOMACRO:
-            if (record->event.pressed) {
-        // when keycode KC_DEMOMACRO is pressed
-        SEND_STRING("QMK is the best thing ever!");
-      } else {
-        // when keycode KC_DEMOMACRO is released
-      }
-      break;
     case LOWER:
       if (record->event.pressed) {
           //not sure how to have keyboard check mode and set it to a variable, so my work around
@@ -156,11 +145,3 @@ bool music_mask_user(uint16_t keycode) {
       return true;
   }
 }
-
-void matrix_init_user(void) {
-}
-
-
-void matrix_scan_user(void) {
-}
-

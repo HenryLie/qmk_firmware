@@ -8,7 +8,7 @@
 #include "quantum.h"
 
 #ifdef EE_HANDS
-#   include "tmk_core/common/eeprom.h"
+#   include "eeprom.h"
 #   include "eeconfig.h"
 #endif
 
@@ -54,7 +54,7 @@ bool is_keyboard_master(void)
 }
 
 static void keyboard_master_setup(void) {
-#if defined(USE_I2C) || defined(EH)
+#if defined(USE_I2C)
   #ifdef SSD1306OLED
     matrix_master_OLED_init ();
   #endif

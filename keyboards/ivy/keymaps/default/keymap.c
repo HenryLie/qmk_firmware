@@ -1,6 +1,5 @@
 #include QMK_KEYBOARD_H
 
-extern keymap_config_t keymap_config;
 
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
@@ -27,20 +26,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |  FN  |
  * `------'
  */
-[_L1] = LAYOUT( \
-    KC_1, \
-    KC_2, \
-    MO(_FUNC)  \
+[_L1] = LAYOUT(
+    KC_1,
+    KC_2,
+    MO(_FUNC)
 ),
 
-[_FUNC] = LAYOUT( \
-    CALTDEL, \
-    TSKMGR, \
-    _______ \
+[_FUNC] = LAYOUT(
+    CALTDEL,
+    TSKMGR,
+    _______
 )
 
 };
-
-void matrix_init_user(void) {
-
-}
