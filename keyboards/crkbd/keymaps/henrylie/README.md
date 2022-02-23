@@ -7,7 +7,7 @@ In Colemak, this means `neio` acts as `←↑↓→`, respectively, which is sli
 ## Compile
 
 Compile the firmware using this command:
-> Note 2022-02-23: Firmware size is approaching maximum, 154 bytes left.
+> Note 2022-02-23: Firmware size is approaching maximum, 112 bytes left.
 > Consider removing: dynamic tapping term, via, and RGBLight to reduce the firmware size.
 
 ```sh
