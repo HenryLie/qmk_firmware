@@ -52,3 +52,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MOUSEKEY_INITIAL_SPEED 1
 #define MOUSEKEY_BASE_SPEED 4
 
+#define BONGO_ENABLE

@@ -68,6 +68,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   )
 };
 
+#ifdef BONGO_ENABLE
+#include "bongo.h"
+#endif
+
 #ifdef OLED_ENABLE
 #include <stdio.h>
 
@@ -159,8 +163,9 @@ void oled_render_logo(void) {
 
 bool oled_task_user(void) {
     if (is_keyboard_master()) {
-        oled_render_layer_state();
-        oled_render_keylog();
+        // oled_render_layer_state();
+        // oled_render_keylog();
+        draw_bongo(false);
     } else {
         oled_render_logo();
     }
