@@ -5,4 +5,3 @@ VIA_ENABLE      = yes    # Enable VIA on-the-fly simple customization
 OLED_ENABLE     = yes
 OLED_DRIVER     = SSD1306
 LTO_ENABLE      = yes    # Link Time Optimization, smaller firmware size
-DYNAMIC_TAPPING_TERM_ENABLE = yes
