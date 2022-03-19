@@ -7,3 +7,8 @@ OLED_DRIVER_ENABLE = yes
 OLED_DRIVER     = SSD1306
 WPM_ENABLE      = yes
 LTO_ENABLE      = yes    # Link Time Optimization, smaller firmware size
+
+# Space saving optimizations
+SPACE_CADET_ENABLE = no
+GRAVE_ESC_ENABLE = no
+MAGIC_ENABLE = no

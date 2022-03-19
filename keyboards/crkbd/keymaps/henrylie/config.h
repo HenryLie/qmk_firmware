@@ -44,7 +44,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define OLED_FONT_H "keyboards/crkbd/lib/glcdfont.c"
 
 #define IGNORE_MOD_TAP_INTERRUPT
-#define TAPPING_TERM 165
+#define TAPPING_TERM 170
 
 #define MK_KINETIC_SPEED
 #define MOUSEKEY_INTERVAL 7
